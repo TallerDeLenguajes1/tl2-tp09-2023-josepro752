@@ -28,6 +28,7 @@ public class TareaRepository : ITareaRepository{
             command.Parameters.Add(new SQLiteParameter("@estado",tarea.Estado));
             command.Parameters.Add(new SQLiteParameter("@descripcion",tarea.Descripcion));
             command.Parameters.Add(new SQLiteParameter("@color",tarea.Color));
+            command.Parameters.Add(new SQLiteParameter("@id",tarea.Id));
             // command.Parameters.Add(new SQLiteParameter("@id_usuario_asignado",tarea.IdUsuarioAsignado));
             connection.Open();
             command.ExecuteNonQuery(); // Se usa ExecuteNonQuery, cuando es una modificacion (ALTA, BAJA, ACTUALIZACION)
@@ -47,14 +48,14 @@ public class TareaRepository : ITareaRepository{
                 using (SQLiteDataReader reader = command.ExecuteReader()) {
                     while (reader.Read()) {
                         var tarea = new Tarea();
-                        tarea.Id = (int)reader["id"];
-                        tarea.IdTablero = (int)reader["id_tablero"];
+                        tarea.Id = Convert.ToInt32(reader["id"]);
+                        tarea.IdTablero = Convert.ToInt32(reader["id_tablero"]);
                         tarea.Nombre = reader["nombre"].ToString();
-                        tarea.Estado = (EstadoTarea)reader["estado"];
+                        tarea.Estado = (EstadoTarea)Convert.ToInt64(reader["estado"]);
                         tarea.Descripcion = reader["descripcion"].ToString();
                         tarea.Color = reader["color"].ToString();
                         if (reader["id_usuario_asignado"] != DBNull.Value) {
-                            tarea.IdUsuarioAsignado = (int)reader["id_usuario_asignado"];
+                            tarea.IdUsuarioAsignado = Convert.ToInt32(reader["id_usuario_asignado"]);
                         } else {
                             tarea.IdUsuarioAsignado = 0;
                         }

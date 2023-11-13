@@ -35,7 +35,7 @@ public class UsuarioRepository : IUsuarioRepository{
                     while (reader.Read()) {
                         var usuario = new Usuario();
                         usuario.NombreDeUsuario = reader["nombre_de_usuario"].ToString(); // Lo que va entre corchetes en el Reader es como se llama el campo en la base de datos
-                        usuario.Id = (int)reader["id"];
+                        usuario.Id = Convert.ToInt32(reader["id"]);
                         usuarios.Add(usuario);
                     }
                 }

@@ -42,8 +42,8 @@ public class TableroRepository : ITableroRepository {
                 using (SQLiteDataReader reader = command.ExecuteReader()) {
                     while (reader.Read()) {
                         var tablero = new Tablero();
-                        tablero.Id = (int)reader["id"];
-                        tablero.IdUsuarioPropietario = (int)reader["id_usuario_propietario"];
+                        tablero.Id = Convert.ToInt32(reader["id"]);
+                        tablero.IdUsuarioPropietario = Convert.ToInt32(reader["id_usuario_propietario"]);
                         tablero.Nombre = reader["nombre"].ToString();
                         tablero.Descripcion = reader["descripcion"].ToString();
                         tableros.Add(tablero);
